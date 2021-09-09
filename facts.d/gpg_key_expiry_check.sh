@@ -1,5 +1,6 @@
 #!/bin/sh
-# https://git.gnupg.org/cgi-bin/gitweb.cgi?p=gnupg.git;a=blob_plain;f=doc/DETAILS
+# Helpful Links:
+#   https://git.gnupg.org/cgi-bin/gitweb.cgi?p=gnupg.git;a=blob_plain;f=doc/DETAILS
 
 GPGDIR=/etc/pki/rpm-gpg
 echo "{"
