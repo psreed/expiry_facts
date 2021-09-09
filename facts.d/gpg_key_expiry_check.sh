@@ -5,7 +5,7 @@ GPGDIR=/etc/pki/rpm-gpg
 echo "{"
 echo "  \"gpg_rpm_gpg_dir\": \"${GPGDIR}\","
 echo "  \"gpg_pub_keys\":"
-echo "  ["
+echo "  {"
 CNT=0
 EXPIRY_WARNINGS=0;
 if [ -d "${GPGDIR}" ] && [ ! -z "${GPGDIR}" ]; then
@@ -13,9 +13,12 @@ if [ -d "${GPGDIR}" ] && [ ! -z "${GPGDIR}" ]; then
   do
 ## Get a Key
     KEY=`cat ${i} | gpg --with-colon --fixed-list-mode`
+    KEYID=`echo ${KEY} | cut -d: -f5`
     if [ $CNT -gt 0 ]; then echo ","; fi
 
-    echo "    {"
+    echo "    \"${KEYID}\": {"
+
+
 
 ## Output the Key in colon format
     echo -n "      \"key_info\": \""
@@ -53,7 +56,7 @@ if [ -d "${GPGDIR}" ] && [ ! -z "${GPGDIR}" ]; then
   done
 fi
 echo ""
-echo "  ],"
+echo "  },"
 echo "  \"gpg_key_count\": ${CNT},"
 echo "  \"gpg_expiry_warnings\": ${EXPIRY_WARNINGS}"
 echo "}"
