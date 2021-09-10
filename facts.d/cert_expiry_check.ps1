@@ -4,8 +4,8 @@
 #    https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/get-date?view=powershell-7.1
 #    https://stackoverflow.com/questions/21297853/how-to-determine-ssl-cert-expiration-date-from-a-pem-encoded-certificate
 
-
-$CERT=$(puppet config print hostcert)
+$PUPPET="C:\Program Files\Puppet Labs\Puppet\bin\puppet.bat"
+$CERT=$(& ${PUPPET} config print hostcert)
 
 $END=$(((openssl x509 -enddate -noout -in ${CERT}) -Split "=" )[1]) -replace '  ',' '
 $END=$END -replace ".{3}$",'+00'
