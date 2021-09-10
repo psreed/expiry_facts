@@ -20,7 +20,7 @@ The next time Puppet runs on your endpoints, you will see the facts provided by 
 
 ## Facts
 
-### The following facts are provided by adding this module
+### The following facts are provided by adding this module to your Puppfile
 
 #### puppet_cert
 
@@ -79,7 +79,9 @@ gpg_pub_keys example:
 }
 ```
 
-## Warnings and Bad Practices
+## Warnings
+
+#### Warnings and Bad Practices
 
 This was a very quickly developed module to get facts. Currently there are some hardcoded paths and things that are completely against best practice coding, but it works.
 
