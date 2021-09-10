@@ -4,9 +4,8 @@
 
 1. [Description](#description)
 1. [Setup - The basics of getting started with expiry_facts](#setup)
-   - [Setup requirements](#setup-requirements)
 1. [Facts - The Facts provided by this module](#Facts)
-1. [Warnings](#Warnings)
+1. [Warnings - Warnings and Bad Practices](#Warnings)
 
 ## Description
 
@@ -16,7 +15,8 @@ You can use these facts in reports or simply create classifications groups to sh
 
 ## Setup
 
-Simply add this module to your Puppetfile, run a code deploy and you're good to go. The next time Puppet runs on your endpoints, you will see the facts provided by this module.
+Simply add this module to your Puppetfile, trigger a code deploy and you're good to go.
+The next time Puppet runs on your endpoints, you will see the facts provided by this module.
 
 ## Facts
 
@@ -29,7 +29,8 @@ Tested with Windows 10, CentOS/RedHat EL 7, EL 8 and Ubuntu 20.04.
 
 puppet_cert fact example:
 
-```{
+```
+{
   "end_date" : "2026-02-03T01:47:11",
   "expiry_under_6_months" : false,
   "hostcert" : "C:/ProgramData/PuppetLabs/puppet/etc/ssl/certs/somehostname.pem",
@@ -55,7 +56,8 @@ This fact shows information on all the currently available facts in the gpg_rpm_
 
 gpg_pub_keys example:
 
-```{
+```
+{
   "1054B7A24BD6EC30" : {
     "expiry_date" : "Wed Jan 4 19:06:37 EST 2017",
     "expiry_under_6_months" : true,
@@ -77,7 +79,7 @@ gpg_pub_keys example:
 }
 ```
 
-## Warnings
+## Warnings and Bad Practices
 
 This was a very quickly developed module to get facts. Currently there are some hardcoded paths and things that are completely against best practice coding, but it works.
 
