@@ -18,6 +18,15 @@ You can use these facts in reports or simply create classifications groups to sh
 Simply add this module to your Puppetfile, trigger a code deploy and you're good to go.
 The next time Puppet runs on your endpoints, you will see the facts provided by this module.
 
+Example Puppetfile Entry:
+
+```
+## GPG Expiry warnings
+mod 'psreed-expiry_facts',
+  :git    => 'https://github.com/psreed/expiry_facts.git',
+  :branch => 'main'
+```
+
 ## Facts
 
 ### The following facts are provided by adding this module to your Puppfile
