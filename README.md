@@ -1,117 +1,87 @@
 # expiry_facts
 
-Welcome to your new module. A short overview of the generated parts can be found
-in the [PDK documentation][1].
-
-The README template below provides a starting point with details about what
-information to include in your README.
-
 ## Table of Contents
 
 1. [Description](#description)
 1. [Setup - The basics of getting started with expiry_facts](#setup)
-    * [What expiry_facts affects](#what-expiry_facts-affects)
-    * [Setup requirements](#setup-requirements)
-    * [Beginning with expiry_facts](#beginning-with-expiry_facts)
-1. [Usage - Configuration options and additional functionality](#usage)
-1. [Limitations - OS compatibility, etc.](#limitations)
-1. [Development - Guide for contributing to the module](#development)
+   - [Setup requirements](#setup-requirements)
+1. [Facts - The Facts provided by this module](#Facts)
+1. [Warnings](#Warnings)
 
 ## Description
 
-Briefly tell users why they might want to use your module. Explain what your
-module does and what kind of problems users can solve with it.
-
-This should be a fairly short description helps the user decide if your module
-is what they want.
+Interested in knowning when your RPM GPG Keys or Puppet Certificates are going to expire? This module is for you.
+This is an extremely small module which only provides a few external facts at the moment (no manifests at all, just 3 external fact files).
+You can use these facts in reports or simply create classifications groups to show when your certificates are going to expire.
 
 ## Setup
 
-### What expiry_facts affects **OPTIONAL**
+Simply add this module to your Puppetfile, run a code deploy and you're good to go. The next time Puppet runs on your endpoints, you will see the facts provided by this module.
 
-If it's obvious what your module touches, you can skip this section. For
-example, folks can probably figure out that your mysql_instance module affects
-their MySQL instances.
+## Facts
 
-If there's more that they should know about, though, this is the place to
-mention:
+### The following facts are provided by adding this module
 
-* Files, packages, services, or operations that the module will alter, impact,
-  or execute.
-* Dependencies that your module automatically installs.
-* Warnings or other important notices.
+#### puppet_cert
 
-### Setup Requirements **OPTIONAL**
+This fact will show on Windows and Linux hosts.
+Tested with Windows 10, CentOS/RedHat EL 7, EL 8 and Ubuntu 20.04.
 
-If your module requires anything extra before setting up (pluginsync enabled,
-another module, etc.), mention it here.
+puppet_cert fact example:
 
-If your most recent release breaks compatibility or requires particular steps
-for upgrading, you might want to include an additional "Upgrading" section here.
-
-### Beginning with expiry_facts
-
-The very basic steps needed for a user to get the module up and running. This
-can include setup steps, if necessary, or it can be an example of the most basic
-use of the module.
-
-## Usage
-
-Include usage examples for common use cases in the **Usage** section. Show your
-users how to use your module to solve problems, and be sure to include code
-examples. Include three to five examples of the most important or common tasks a
-user can accomplish with your module. Show users how to accomplish more complex
-tasks that involve different types, classes, and functions working in tandem.
-
-## Reference
-
-This section is deprecated. Instead, add reference information to your code as
-Puppet Strings comments, and then use Strings to generate a REFERENCE.md in your
-module. For details on how to add code comments and generate documentation with
-Strings, see the [Puppet Strings documentation][2] and [style guide][3].
-
-If you aren't ready to use Strings yet, manually create a REFERENCE.md in the
-root of your module directory and list out each of your module's classes,
-defined types, facts, functions, Puppet tasks, task plans, and resource types
-and providers, along with the parameters for each.
-
-For each element (class, defined type, function, and so on), list:
-
-* The data type, if applicable.
-* A description of what the element does.
-* Valid values, if the data type doesn't make it obvious.
-* Default value, if any.
-
-For example:
-
-```
-### `pet::cat`
-
-#### Parameters
-
-##### `meow`
-
-Enables vocalization in your cat. Valid options: 'string'.
-
-Default: 'medium-loud'.
+```{
+  "end_date" : "2026-02-03T01:47:11",
+  "expiry_under_6_months" : false,
+  "hostcert" : "C:/ProgramData/PuppetLabs/puppet/etc/ssl/certs/somehostname.pem",
+  "start_date" : "2021-02-03T01:47:11"
+}
 ```
 
-## Limitations
+#### gpg_expiry_warnings
 
-In the Limitations section, list any incompatibilities, known issues, or other
-warnings.
+This fact will show the number of RPM GPG keys that have either already expired or will be expiring within the next 6 months.
 
-## Development
+#### gpg_key_count
 
-In the Development section, tell other users the ground rules for contributing
-to your project and how they should submit their work.
+This is the number of RPM GPG keys current present in the system.
 
-## Release Notes/Contributors/Etc. **Optional**
+#### gpg_rpm_gpg_dir
 
-If you aren't using changelog, put your release notes here (though you should
-consider using changelog). You can also add any additional sections you feel are
-necessary or important to include here. Please use the `##` header.
+This fact shows the current working directory for the RPM GPG keys
 
-[1]: https://puppet.com/docs/pdk/latest/pdk_generating_modules.html
-[2]: https://puppet.com/docs/puppet/latest/puppet_strings.html
-[3]: https://puppet.com/docs/puppet/latest/puppet_strings_style.html
+#### gpg_pub_keys
+
+This fact shows information on all the currently available facts in the gpg_rpm_gpg_dir.
+
+gpg_pub_keys example:
+
+```{
+  "1054B7A24BD6EC30" : {
+    "expiry_date" : "Wed Jan 4 19:06:37 EST 2017",
+    "expiry_under_6_months" : true,
+    "key_info" : "pub:e:4096:1:1054B7A24BD6EC30:1278720832:1483574797::-:Puppet Labs Release Key (Puppet Labs Release Key) <info@puppetlabs.com>:",
+    "key_status" : "EXPIRED"
+  },
+  "24C6A8A7F4A80EB5" : {
+    "expiry_date" : "",
+    "expiry_under_6_months" : "",
+    "key_info" : "pub:-:4096:1:24C6A8A7F4A80EB5:1403518795:::-:CentOS-7 Key (CentOS 7 Official Signing Key) <security@centos.org>:",
+    "key_status" : "-"
+  },
+  "4528B6CD9E61EF26" : {
+    "expiry_date" : "Sun Apr 6 17:39:22 EDT 2025",
+    "expiry_under_6_months" : false,
+    "key_info" : "pub:-:4096:1:4528B6CD9E61EF26:1554759562:1743975562::-:Puppet, Inc. Release Key (Puppet, Inc. Release Key) <release@puppet.com>:",
+    "key_status" : "-"
+  }
+}
+```
+
+## Warnings
+
+This was a very quickly developed module to get facts. Currently there are some hardcoded paths and things that are completely against best practice coding, but it works.
+
+The current hardcoded paths and general bad things are:
+
+1. Path to Puppet on Windows: "C:\Program Files\Puppet Labs\Puppet\bin\puppet.bat"
+1. RPM GPG key check has no testing for OS. It will still run on apt-get platforms (ie, Debian, Ubuntu, etc), but the gpg\_\* facts will just be blank. No real harm, but there should be code to simply skip and not output these facts.
