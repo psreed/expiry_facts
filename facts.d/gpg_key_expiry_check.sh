@@ -13,7 +13,7 @@ if [ -d "${GPGDIR}" ] && [ ! -z "${GPGDIR}" ]; then
   for i in $GPGDIR/*
   do
 ## Get a Key
-    KEY=`cat ${i} | gpg --with-colon --fixed-list-mode`
+    KEY=`cat ${i} | gpg --with-colon --fixed-list-mode 2>/dev/null`
     KEYID=`echo ${KEY} | cut -d: -f5`
     if [ $CNT -gt 0 ]; then echo ","; fi
 
