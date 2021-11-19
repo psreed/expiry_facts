@@ -1,7 +1,7 @@
 #!/bin/sh
 # Helpful Links:
 #   https://git.gnupg.org/cgi-bin/gitweb.cgi?p=gnupg.git;a=blob_plain;f=doc/DETAILS
-
+# Other options to maybe add? --keyid-format long --import --import-options show-only --with-fingerprint
 GPGDIR=/etc/pki/rpm-gpg
 echo "{"
 echo "  \"gpg_rpm_gpg_dir\": \"${GPGDIR}\","
@@ -13,13 +13,11 @@ if [ -d "${GPGDIR}" ] && [ ! -z "${GPGDIR}" ]; then
   for i in $GPGDIR/*
   do
 ## Get a Key
-    KEY=`cat ${i} | gpg --with-colon --fixed-list-mode 2>/dev/null`
+    KEY=`gpg --with-colon --fixed-list-mode ${i} 2>/dev/null`
     KEYID=`echo ${KEY} | cut -d: -f5`
     if [ $CNT -gt 0 ]; then echo ","; fi
 
     echo "    \"${KEYID}\": {"
-
-
 
 ## Output the Key in colon format
     echo -n "      \"key_info\": \""
